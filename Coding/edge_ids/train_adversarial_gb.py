@@ -20,10 +20,13 @@ OUT=PROJECT/'artifacts/adversarial_defenses'
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
 class Iterator(xgb.DataIter):
-    def __init__(self,attack,directory,sha):
+    def __init__(self,attack,directory,sha,matrix_mode=None):
         self.attack=attack;self.sha=sha
         self.cuda=os.environ.get('EDGE_IDS_DEVICE','cpu')=='cuda'
-        super().__init__(cache_prefix=str(directory/'cache'),release_data=True,on_host=self.cuda)
+        mode=matrix_mode or os.environ.get('EDGE_IDS_MATRIX','external')
+        assert mode in ['external','memory']
+        prefix=str(directory/'cache') if mode=='external' else None
+        super().__init__(cache_prefix=prefix,release_data=True,on_host=self.cuda)
         self.reset()
     def reset(self):
         assert digest(PROJECT/'artifacts/augmented_training'/self.attack/'manifest.json')==self.sha,'Snapshot changed during training'
@@ -92,7 +95,7 @@ def train(attack):
     cache_directory=Path(cache_root).expanduser().resolve()/attack if cache_root else directory
     cache_directory.mkdir(parents=True,exist_ok=True)
     write(directory/'runtime.json',dict(threads=parameters['nthread'],matrix=matrix_mode,device=parameters['device'],cache_directory=str(cache_directory),cuda_visible_devices=os.environ.get('CUDA_VISIBLE_DEVICES')))
-    started=time.time();iterator=Iterator(attack,cache_directory,sha)
+    started=time.time();iterator=Iterator(attack,cache_directory,sha,matrix_mode=matrix_mode)
     matrix_class=xgb.ExtMemQuantileDMatrix if matrix_mode=='external' else xgb.QuantileDMatrix
     training=matrix_class(iterator,max_bin=128,nthread=parameters['nthread'])
     assert training.num_row()==manifest['total_rows'] and training.num_col()==157

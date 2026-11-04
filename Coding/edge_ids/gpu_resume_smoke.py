@@ -16,7 +16,7 @@ class Limited(Iterator):
         ok=super().next(input_data);self.count+=int(ok);return ok
 
 with tempfile.TemporaryDirectory() as tmp:
-    it=Limited('FGSM',Path(tmp),digest(PROJECT/'artifacts/augmented_training/FGSM/manifest.json'))
+    it=Limited('FGSM',Path(tmp),digest(PROJECT/'artifacts/augmented_training/FGSM/manifest.json'),matrix_mode='memory')
     matrix=xgb.QuantileDMatrix(it,max_bin=128,nthread=4)
     assert matrix.num_row()==32768 and matrix.num_col()==157
     params=dict(objective='binary:logistic',device='cuda',tree_method='hist',max_depth=8,max_bin=128,seed=42,nthread=4)
