@@ -1,8 +1,10 @@
 # Adversarial generation on the lab server
 
-Publication status: the input archive is prepared locally, but public upload
-requires explicit approval for its frozen weights, labels and model probabilities.
-The download commands below apply only after that approval and publication.
+Publication status: the user explicitly authorized public sharing of the frozen
+weights, labels and model probabilities. The 87,037,426-byte input archive and
+its LF-only checksum file are published in the checkpoint training-data release;
+GitHub's uploaded content digests were verified. The download commands below
+are ready to use.
 
 This is a fresh server-generation workflow, not a continuation of workstation
 cursors. It resumes its own server-created shards on rerun. Workstation shards
