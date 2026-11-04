@@ -13,7 +13,9 @@ class Limited(Iterator):
     def reset(self):super().reset();self.count=0
     def next(self,input_data):
         if self.count>=2:return False
-        ok=super().next(input_data);self.count+=int(ok);return ok
+        ok=super().next(input_data)
+        if ok:assert isinstance(self.keep,cp.ndarray) and self.keep.dtype==cp.float32
+        self.count+=int(ok);return ok
 
 with tempfile.TemporaryDirectory() as tmp:
     it=Limited('FGSM',Path(tmp),digest(PROJECT/'artifacts/augmented_training/FGSM/manifest.json'),matrix_mode='memory')

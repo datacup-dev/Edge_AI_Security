@@ -19,6 +19,18 @@ OUT=PROJECT/'artifacts/adversarial_defenses'
 
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
+def dense_native(values,codes,xp=np):
+    """Dense GPU-compatible namespace; missing blocks stay NaN, active zeros stay zero."""
+    native=xp.asarray(values,dtype=xp.float32)
+    result=xp.full((len(values),157),xp.nan,dtype=xp.float32)
+    for code,(width,offset) in enumerate(zip([64,25,39,25],[0,64,89,128])):
+        selected=np.flatnonzero(codes==code)
+        if not len(selected):continue
+        selected=xp.asarray(selected)
+        result[selected,offset:offset+width]=native[selected,:width]
+        result[selected,153+code]=1
+    return result
+
 class Iterator(xgb.DataIter):
     def __init__(self,attack,directory,sha,matrix_mode=None):
         self.attack=attack;self.sha=sha
@@ -34,6 +46,12 @@ class Iterator(xgb.DataIter):
     def next(self,input_data):
         try:x,y,codes,rows,is_adv=next(self.stream)
         except StopIteration:return False
+        if self.cuda:
+            import cupy as cp
+            self.keep=dense_native(x,codes,cp)
+            self.labels=cp.asarray(y)
+            input_data(data=self.keep,label=self.labels)
+            return True
         # Preserve original native namespace: inactive blocks absent, observed zero explicit.
         widths=[64,25,39,25];offsets=[0,64,89,128,153]
         counts=np.array([widths[int(c)]+1 for c in codes],np.int32)
@@ -46,12 +64,7 @@ class Iterator(xgb.DataIter):
             values[positions[:,:width]]=x[selected,:width];values[positions[:,width]]=1
             indices[positions]=np.r_[np.arange(offsets[code],offsets[code+1]),153+code]
         self.keep=sparse.csr_matrix((values,indices,pointers),shape=(len(y),157))
-        if self.cuda:
-            import cupy as cp
-            from cupyx.scipy.sparse import csr_matrix
-            self.keep=csr_matrix((cp.asarray(values),cp.asarray(indices),cp.asarray(pointers)),shape=(len(y),157))
-            self.labels=cp.asarray(y)
-        else:self.labels=y
+        self.labels=y
         input_data(data=self.keep,label=self.labels)
         return True
 

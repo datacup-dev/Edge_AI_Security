@@ -32,8 +32,10 @@ and host-memory cache, which must fit available host RAM. It is not automaticall
 selected given the reported 38 GiB available and full swap. The CPU disk-backed
 launcher is the fallback if both GPU modes exceed the memory budget.
 
-The new iterator transfers CSR arrays and labels to GPU, preserving explicit
-active zero values and missing inactive native feature blocks. An asynchronous
+The GPU iterator supplies dense CuPy arrays and labels: inactive native blocks
+and inactive domain markers are NaN, active observed zeros remain zero, and the
+active domain marker is one. GPU CSR is unsupported by XGBoost's iterator.
+The CPU iterator remains CSR with identical observed values and missingness. An asynchronous
 CuPy allocator is configured. Saved CPU UBJ trees can be loaded for GPU
 continuation, but bitwise reproduction across CPU/GPU is not promised. The
 same fixed training manifests and 300-round limit remain in force.
