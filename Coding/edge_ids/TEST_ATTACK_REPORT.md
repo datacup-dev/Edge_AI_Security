@@ -1,0 +1,132 @@
+# Separate adversarial test outputs
+
+Status: **failed_worker**; 101,643,897/112,598,865 candidates saved; 55/60 attack/dataset jobs complete.
+
+Each of fifteen methods processes all records from all four original test sets. Outputs remain separate from training and other held-out outputs, and separate by dataset. Original labels are retained, targets are opposite labels, and no test data fit or tune the proxy or GAN.
+
+[Process and parameters](TEST_ATTACKS.md). [Live per-class metrics](artifacts/separate_test_attacks/progress.csv). [Source provenance](artifacts/separate_test_attacks/configuration.json).
+
+Saved candidates include failed, unchanged and initially misclassified cases. New success excludes existing baseline errors. Partial rates cannot rank final attack strength.
+
+| Attack | Dataset | True → target | Saved / required | New successes / eligible | Complete |
+|---|---|---|---:|---:|---|
+| FGSM | DataSense | 0 → 1 | 20,520 / 20,520 | 5,384 / 20,501 | True |
+| FGSM | DataSense | 1 → 0 | 13,559 / 13,559 | 10,241 / 11,656 | True |
+| FGSM | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| FGSM | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| FGSM | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 80,823 / 141,745 | True |
+| FGSM | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 6,331 / 6,823,375 | True |
+| FGSM | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 9,392 / 62,502 | True |
+| FGSM | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 19,123 / 59,416 | True |
+| CW | DataSense | 0 → 1 | 20,520 / 20,520 | 5,342 / 20,501 | True |
+| CW | DataSense | 1 → 0 | 13,559 / 13,559 | 8,757 / 11,656 | True |
+| CW | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| CW | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| CW | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 32,439 / 141,745 | True |
+| CW | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 7,273 / 6,823,375 | True |
+| CW | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 4,078 / 62,502 | True |
+| CW | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 3,571 / 59,416 | True |
+| PGD | DataSense | 0 → 1 | 20,520 / 20,520 | 5,560 / 20,501 | True |
+| PGD | DataSense | 1 → 0 | 13,559 / 13,559 | 10,148 / 11,656 | True |
+| PGD | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| PGD | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| PGD | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 91,399 / 141,745 | True |
+| PGD | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 9,120 / 6,823,375 | True |
+| PGD | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 12,311 / 62,502 | True |
+| PGD | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 20,308 / 59,416 | True |
+| JSMA | DataSense | 0 → 1 | 20,520 / 20,520 | 2,567 / 20,501 | True |
+| JSMA | DataSense | 1 → 0 | 13,559 / 13,559 | 30 / 11,656 | True |
+| JSMA | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 0 / 241,408 | True |
+| JSMA | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| JSMA | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 3,990 / 141,745 | True |
+| JSMA | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 5,453 / 6,823,375 | True |
+| JSMA | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 2,109 / 62,502 | True |
+| JSMA | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 4,075 / 59,416 | True |
+| DeepFool | DataSense | 0 → 1 | 20,520 / 20,520 | 5,429 / 20,501 | True |
+| DeepFool | DataSense | 1 → 0 | 13,559 / 13,559 | 8,985 / 11,656 | True |
+| DeepFool | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| DeepFool | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| DeepFool | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 74,084 / 141,745 | True |
+| DeepFool | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 10,055 / 6,823,375 | True |
+| DeepFool | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 7,466 / 62,502 | True |
+| DeepFool | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 16,254 / 59,416 | True |
+| BIM | DataSense | 0 → 1 | 20,520 / 20,520 | 5,593 / 20,501 | True |
+| BIM | DataSense | 1 → 0 | 13,559 / 13,559 | 10,092 / 11,656 | True |
+| BIM | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| BIM | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| BIM | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 71,971 / 141,745 | True |
+| BIM | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 8,274 / 6,823,375 | True |
+| BIM | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 11,682 / 62,502 | True |
+| BIM | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 20,181 / 59,416 | True |
+| MIM | DataSense | 0 → 1 | 20,520 / 20,520 | 5,518 / 20,501 | True |
+| MIM | DataSense | 1 → 0 | 13,559 / 13,559 | 10,113 / 11,656 | True |
+| MIM | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| MIM | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| MIM | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 78,589 / 141,745 | True |
+| MIM | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 14,973 / 6,823,375 | True |
+| MIM | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 12,389 / 62,502 | True |
+| MIM | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 19,526 / 59,416 | True |
+| Transfer | DataSense | 0 → 1 | 20,520 / 20,520 | 5,246 / 20,501 | True |
+| Transfer | DataSense | 1 → 0 | 13,559 / 13,559 | 9,592 / 11,656 | True |
+| Transfer | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| Transfer | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| Transfer | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 98,399 / 141,745 | True |
+| Transfer | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 9,598 / 6,823,375 | True |
+| Transfer | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 12,768 / 62,502 | True |
+| Transfer | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 20,921 / 59,416 | True |
+| NES | DataSense | 0 → 1 | 20,520 / 20,520 | 6,152 / 20,501 | True |
+| NES | DataSense | 1 → 0 | 13,559 / 13,559 | 10,568 / 11,656 | True |
+| NES | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| NES | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| NES | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 76,894 / 141,745 | True |
+| NES | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 19,693 / 6,823,375 | True |
+| NES | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 20,548 / 62,502 | True |
+| NES | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 14,224 / 59,416 | True |
+| SPSA | DataSense | 0 → 1 | 20,520 / 20,520 | 6,130 / 20,501 | True |
+| SPSA | DataSense | 1 → 0 | 13,559 / 13,559 | 10,552 / 11,656 | True |
+| SPSA | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| SPSA | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| SPSA | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 75,413 / 141,745 | True |
+| SPSA | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 19,144 / 6,823,375 | True |
+| SPSA | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 19,576 / 62,502 | True |
+| SPSA | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 12,402 / 59,416 | True |
+| Square | DataSense | 0 → 1 | 20,520 / 20,520 | 6,850 / 20,501 | True |
+| Square | DataSense | 1 → 0 | 13,559 / 13,559 | 10,697 / 11,656 | True |
+| Square | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| Square | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| Square | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 141,696 / 141,745 | True |
+| Square | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 45,966 / 6,823,375 | True |
+| Square | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 30,839 / 62,502 | True |
+| Square | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 33,680 / 59,416 | True |
+| Boundary | DataSense | 0 → 1 | 0 / 20,520 | 0 / 0 | False |
+| Boundary | DataSense | 1 → 0 | 3,776 / 13,559 | 3,599 / 3,599 | False |
+| Boundary | Edge-IIoTset | 0 → 1 | 3,776 / 242,347 | 0 / 3,752 | False |
+| Boundary | Edge-IIoTset | 1 → 0 | 0 / 90,534 | 0 / 0 | False |
+| Boundary | CICIoT2023 | 0 → 1 | 3,233 / 164,729 | 2,226 / 2,226 | False |
+| Boundary | CICIoT2023 | 1 → 0 | 479 / 6,851,776 | 103 / 351 | False |
+| Boundary | X-IIoTID | 0 → 1 | 1,933 / 63,213 | 783 / 1,916 | False |
+| Boundary | X-IIoTID | 1 → 0 | 1,779 / 59,913 | 808 / 1,767 | False |
+| HopSkipJump | DataSense | 0 → 1 | 20,520 / 20,520 | 6,639 / 20,501 | True |
+| HopSkipJump | DataSense | 1 → 0 | 13,559 / 13,559 | 10,710 / 11,656 | True |
+| HopSkipJump | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| HopSkipJump | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| HopSkipJump | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 141,707 / 141,745 | True |
+| HopSkipJump | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 39,533 / 6,823,375 | True |
+| HopSkipJump | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 26,009 / 62,502 | True |
+| HopSkipJump | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 26,814 / 59,416 | True |
+| ZOO | DataSense | 0 → 1 | 20,520 / 20,520 | 163 / 20,501 | True |
+| ZOO | DataSense | 1 → 0 | 13,559 / 13,559 | 2,870 / 11,656 | True |
+| ZOO | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 1 / 241,408 | True |
+| ZOO | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| ZOO | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 49,912 / 141,745 | False |
+| ZOO | CICIoT2023 | 1 → 0 | 3,388,423 / 6,851,776 | 74 / 3,387,879 | False |
+| ZOO | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 3,065 / 62,502 | True |
+| ZOO | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 3,070 / 59,416 | True |
+| GAN | DataSense | 0 → 1 | 20,520 / 20,520 | 5,659 / 20,501 | True |
+| GAN | DataSense | 1 → 0 | 13,559 / 13,559 | 9,274 / 11,656 | True |
+| GAN | Edge-IIoTset | 0 → 1 | 242,347 / 242,347 | 0 / 241,408 | True |
+| GAN | Edge-IIoTset | 1 → 0 | 90,534 / 90,534 | 0 / 90,305 | True |
+| GAN | CICIoT2023 | 0 → 1 | 164,729 / 164,729 | 23,109 / 141,745 | True |
+| GAN | CICIoT2023 | 1 → 0 | 6,851,776 / 6,851,776 | 21,914 / 6,823,375 | True |
+| GAN | X-IIoTID | 0 → 1 | 63,213 / 63,213 | 14,705 / 62,502 | True |
+| GAN | X-IIoTID | 1 → 0 | 59,913 / 59,913 | 18,665 / 59,416 | True |
