@@ -1,0 +1,8 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+numpy==2.5.4
+scipy==1.18.1
+xgboost==3.4.1
+torch==2.11.0+cu128
+adversarial-robustness-toolbox==1.20.1
+scikit-learn==1.9.1
+tqdm==4.70.1

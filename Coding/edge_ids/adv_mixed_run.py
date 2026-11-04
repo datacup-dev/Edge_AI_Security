@@ -17,16 +17,17 @@ def empty_state(total=COUNT):
     return dict(done=0,total=total,by_class={str(y):dict(done=0,eligible=0,success=0,changed=0,queries=0,capped=0,initialization_failed=0,l2_sum=0.,linf_sum=0.) for y in [0,1]},seconds=0.)
 
 
-def main(lane,test_dataset=None,one_cycle=False,heldout_role='test'):
+def main(lane,test_dataset=None,one_cycle=False,heldout_role='test',output_base=None):
     assert read(ROOT/'preflight.json')['status']=='passed'
     torch.set_num_threads(2);data=Data();target=Target(data);config=read(ROOT/'configuration.json');assert target.hash==config['baseline_sha256']
     assert config['epsilon_standardized_linf']==EPS
     assert heldout_role in ['test','validation']
-    output_root=ROOT if test_dataset is None else PROJECT/'artifacts'/f'separate_{heldout_role}_attacks'
+    input_root=ROOT if test_dataset is None else PROJECT/'artifacts'/f'separate_{heldout_role}_attacks'
+    output_root=input_root if output_base is None else output_base
     if test_dataset is not None:
-        data.records=np.load(output_root/'cohorts'/f'{test_dataset}.npy',mmap_mode='r')
+        data.records=np.load(input_root/'cohorts'/f'{test_dataset}.npy',mmap_mode='r')
     count=len(data.records)
-    probability_path=ROOT/'clean_probability.npy' if test_dataset is None else output_root/'cohorts'/f'{test_dataset}_probability.npy'
+    probability_path=ROOT/'clean_probability.npy' if test_dataset is None else input_root/'cohorts'/f'{test_dataset}_probability.npy'
     probabilities=np.load(probability_path,mmap_mode='r');proxies={};generators=None
     batch_size=4096 if lane in ['gradient','GAN'] else 512 if lane=='score' else 64
     if lane=='gradient':proxies={True:proxy(data,True),False:proxy(data,False)}
@@ -35,7 +36,7 @@ def main(lane,test_dataset=None,one_cycle=False,heldout_role='test'):
         generators.load_state_dict(torch.load(ROOT/'GAN_model/model.pt',map_location=device,weights_only=True)['state_dict']);generators.eval()
     tasks=[]
     for method in LANES[lane]:
-        directory=ROOT/method if test_dataset is None else output_root/method/test_dataset
+        directory=output_root/method if test_dataset is None else output_root/method/test_dataset
         (directory/'shards').mkdir(parents=True,exist_ok=True)
         method_record=dict(method=method,parameters=PARAMETERS[method],epsilon=EPS,processing_batch=batch_size,
             scope='All mixed training records, both classes',labels='Original labels retained; target=1-label',mixed_sha256=config['mixed_sha256'],baseline_sha256=target.hash)
