@@ -17,6 +17,10 @@ COUNT=35030746
 
 def read(path):return json.loads(Path(path).read_text(encoding='utf-8'))
 
+def project_path(relative):
+    """Resolve project-relative metadata saved on either Windows or POSIX."""
+    return PROJECT/str(relative).replace(chr(92),'/')
+
 
 def replace(source,target):
     for attempt in range(100):
@@ -75,7 +79,7 @@ class Target:
     def __init__(self,data,threads=2):
         self.data=data;baseline=read(PROJECT/'artifacts/overall_baseline.json')
         assert baseline['status']=='verified_complete' and baseline['selected']['model']=='GB'
-        self.path=PROJECT/baseline['selected']['checkpoint'];self.hash=digest(self.path)
+        self.path=project_path(baseline['selected']['checkpoint']);self.hash=digest(self.path)
         self.model=xgb.Booster();self.model.load_model(self.path);self.model.set_param({'device':'cpu','nthread':threads});self.queries=0
     def local(self,x,code):
         matrix=np.full((len(x),157),np.nan,np.float32);a,b=self.data.offsets[code:code+2]

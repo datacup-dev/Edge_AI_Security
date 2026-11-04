@@ -8,7 +8,7 @@ import sys
 import time
 import traceback
 import numpy as np
-from adv_mixed_data import PROJECT,ROOT,NAMES,Data,Target,read,save,replace,digest
+from adv_mixed_data import PROJECT,ROOT,NAMES,Data,Target,read,save,replace,digest,project_path
 from adv_mixed_algorithms import METHODS
 from adv_mixed_run import LANES,main as generate
 
@@ -23,7 +23,7 @@ PROTOCOL_FILE='TEST_ATTACKS.md'
 def prepare():
     (TEST/'cohorts').mkdir(parents=True,exist_ok=True);data=Data();target=Target(data,2)
     training=read(ROOT/'configuration.json');assert target.hash==training['baseline_sha256']
-    components={str(p.relative_to(PROJECT)):digest(p) for p in [ROOT/'surrogate/model.pt',ROOT/'GAN_model/model.pt',PROJECT/'artifacts/adapted_experiment/MLP/best.pt']}
+    components={p.relative_to(PROJECT).as_posix():digest(p) for p in [ROOT/'surrogate/model.pt',ROOT/'GAN_model/model.pt',PROJECT/'artifacts/adapted_experiment/MLP/best.pt']}
     cohorts=[];consistency=[]
     for code,name in enumerate(NAMES):
         native=PROJECT/'artifacts/encoded_inputs'/name;split=np.load(native/'split.npy',mmap_mode='r');labels=np.load(native/'labels.npy',mmap_mode='r')
@@ -102,7 +102,7 @@ def report():
 
 def worker(lane):
     config=read(TEST/'configuration.json')
-    assert all(digest(PROJECT/path)==expected for path,expected in config['frozen_component_hashes'].items())
+    assert all(digest(project_path(path))==expected for path,expected in config['frozen_component_hashes'].items())
     pending=set(NAMES)
     while pending:
         for name in NAMES:
@@ -120,7 +120,7 @@ def worker(lane):
 def audit(partial=False):
     data=Data();target=Target(data);config=read(TEST/'configuration.json');checked=[]
     assert target.hash==config['baseline_sha256']
-    assert all(digest(PROJECT/path)==expected for path,expected in config['frozen_component_hashes'].items())
+    assert all(digest(project_path(path))==expected for path,expected in config['frozen_component_hashes'].items())
     for code,name in enumerate(NAMES):
         cohort=np.load(TEST/'cohorts'/f'{name}.npy',mmap_mode='r');native=PROJECT/'artifacts/encoded_inputs'/name
         split=np.load(native/'split.npy',mmap_mode='r');labels=np.load(native/'labels.npy',mmap_mode='r')

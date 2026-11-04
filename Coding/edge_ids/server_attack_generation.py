@@ -5,16 +5,16 @@ import json
 import os
 from pathlib import Path
 import time
-from adv_mixed_data import PROJECT,NAMES,ROOT,digest,read,save
+from adv_mixed_data import PROJECT,NAMES,ROOT,digest,read,save,project_path
 import adv_mixed_run as worker
 from adv_mixed_algorithms import METHODS
 
 def main(role,method,dataset=None):
     manifest=read(PROJECT/'attack_generation_inputs.json')
     for entry in manifest['files']:
-        path=PROJECT/entry['path']
+        path=project_path(entry['path'])
         assert path.is_file() and digest(path)==entry['sha256'],f'Missing/changed attack input: {path}'
-    for relative in manifest['requires_existing']:assert (PROJECT/relative).is_file(),f'Missing base training input: {relative}'
+    for relative in manifest['requires_existing']:assert project_path(relative).is_file(),f'Missing base training input: {relative}'
     assert digest(PROJECT/'artifacts/mixed_training/records.npy')==read(ROOT/'configuration.json')['mixed_sha256']
     output=PROJECT/'artifacts/server_attack_generation'/role
     output.mkdir(parents=True,exist_ok=True)
