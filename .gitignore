@@ -3,6 +3,7 @@ __pycache__/
 **/artifacts/
 **/migration/
 **/github_upload/
+**/training-data-download/
 Datasets/
 .env
 .env.*

@@ -4,6 +4,11 @@
 
 The approximately 10.7 GB of training arrays and shards are not in this ZIP; transfer the files listed in `edge_ids/transfer-files.txt` separately.
 
+Those exact files are provided as seven compressed parts in the
+[training-data release](https://github.com/datacup-dev/Edge_AI_Security/releases/tag/training-snapshot-20261104-121037).
+Use [the server downloader and guide](../Coding/edge_ids/TRAINING_DATA_TRANSFER.md)
+to fetch and verify them.
+
 From the repository root on Linux:
 
 ```bash
