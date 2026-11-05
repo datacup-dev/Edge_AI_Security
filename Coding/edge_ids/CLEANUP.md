@@ -26,6 +26,8 @@ encoded inputs, split metadata, mixed training membership, original model
 checkpoints, saved classifier predictions/metrics and `artifacts/expanded_classical/GB`.
 The known `/tmp/edge_ids_restore` export is removed only when its migration
 marker exists and the directory is owned by the current user.
+Known per-attack cache subdirectories under `~/edge_ids_cache` are also removed;
+other cache names and custom locations are preserved.
 
 Tracked source deletions arrive through Git. Untracked server-generated samples
 and defended models require running the cleanup helper; Git pull cannot remove

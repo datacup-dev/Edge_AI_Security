@@ -110,6 +110,15 @@ def main(apply=False):
     if os.name!='nt' and temporary.is_dir() and (temporary/'edge_ids/migration_inventory.json').is_file():
         assert temporary.resolve()==Path('/tmp/edge_ids_restore')
         if temporary.stat().st_uid==os.getuid():shutil.rmtree(temporary)
+    cache=Path.home()/'edge_ids_cache'
+    if os.name!='nt' and cache.is_dir() and not cache.is_symlink() and cache.stat().st_uid==os.getuid():
+        for name in ['FGSM','CW','PGD','JSMA','DeepFool','BIM','MIM','Transfer','Boundary','HopSkipJump','ZOO','NES','SPSA','Square','GAN']:
+            target=cache/name
+            if target.is_symlink():target.unlink()
+            elif target.is_dir():
+                assert cache.resolve() in target.resolve().parents
+                shutil.rmtree(target)
+        if not any(cache.iterdir()):cache.rmdir()
     after=protected_hashes();assert before==after,'Protected artifact hash mismatch'
     report=dict(status='completed',removed=removed,stopped_pids=stopped,removed_notebook_cells=cells,
         protected_hashes=after,original_datasets_touched=False)
