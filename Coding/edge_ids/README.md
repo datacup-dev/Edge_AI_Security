@@ -1,38 +1,6 @@
-# Edge IDS mixed-domain experiment
+# Edge IDS clean classifier experiment
 
-Separate GB defense retraining is documented in
-[ADVERSARIAL_DEFENSE_TRAINING.md](ADVERSARIAL_DEFENSE_TRAINING.md). Live status is
-`artifacts/adversarial_defenses/status.json`; partial training snapshots produce
-provisional defenses, with no validation/test fitting.
-
-Clean + adversarial validation datasets have 60 separate snapshots, one per
-attack and original validation dataset. See
-[AUGMENTED_VALIDATION.md](AUGMENTED_VALIDATION.md) for counts and
-`augmented_validation.batches` usage. Training and test records are excluded;
-incomplete attack generation is marked partial.
-
-Clean + adversarial test datasets now have 60 independent snapshots, one per
-attack and original test dataset. See [AUGMENTED_TEST.md](AUGMENTED_TEST.md) for
-counts and `augmented_test.batches` usage. Training and validation are excluded;
-incomplete attack generation is marked partial.
-
-Per-attack clean + adversarial training datasets are described in
-[AUGMENTED_TRAINING.md](AUGMENTED_TRAINING.md). Their snapshot manifests live in
-`artifacts/augmented_training/<attack>/manifest.json`; use `augmented_training.batches`
-to read the concatenated features and original labels. Partial generation is
-explicitly marked, and validation/test samples are excluded.
-
-Validation attack outputs have their own [live report](VALIDATION_ATTACK_REPORT.md)
-and [process record](VALIDATION_ATTACKS.md), separate from both training and test
-outputs and generated using frozen training-fitted attack components.
-
-Held-out attack generation now has an independent [test report](TEST_ATTACK_REPORT.md)
-and [test process record](TEST_ATTACKS.md). It reuses frozen training-fitted
-components; adversarial training and test outputs remain separate.
-
-Current generation covers **all mixed-training records from both classes**, with
-fifteen separate attack outputs. See the [live report](MIXED_TRAINING_ATTACK_REPORT.md)
-and [complete process and settings](MIXED_TRAINING_ATTACKS.md).
+Adversarial sample generation, augmented datasets, defended models and their migration bundles were removed at the user's request. Original datasets, preprocessing/splits, mixed clean training membership, classifier results and the original Gradient Boosting baseline are preserved.
 
 The expanded comparison is tracked in [Extended report](EXTENDED_EXPERIMENT_REPORT.md),
 with full settings in [Extended methods](EXTENDED_EXPERIMENT_METHOD.md).

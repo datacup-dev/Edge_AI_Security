@@ -1,11 +1,7 @@
-# Edge AI Security
+# Edge AI Security ? clean classifier study
 
-Real-time, explainable adversarial robustness research for edge intrusion detection.
+Project source, classifier reports and notebook: [Coding/edge_ids](Coding/edge_ids).
 
-Project source, notebook and documentation: [Coding/edge_ids](Coding/edge_ids).
+The original Gradient Boosting baseline is preserved in [baseline/GB](baseline/GB), with its model, settings and validation selection metadata. Original datasets, preprocessing and classifier results remain preserved on the workstation and server.
 
-Checkpoint models: [checkpoints](checkpoints). Required frozen training inputs:
-[training-data release](https://github.com/datacup-dev/Edge_AI_Security/releases/tag/training-snapshot-20261104-121037).
-See [download and restore instructions](Coding/edge_ids/TRAINING_DATA_TRANSFER.md).
-
-For lab-server migration, see [LAB_SERVER_SETUP.md](Coding/edge_ids/LAB_SERVER_SETUP.md). Datasets, generated artifacts, model checkpoints and virtual environments are transferred separately. Some experiments use provisional partial attack snapshots; see project status and method documentation.
+Adversarial samples, defended models, generation code and migration bundles were removed at the user's request. [Lab-server cleanup instructions](Coding/edge_ids/CLEANUP.md).

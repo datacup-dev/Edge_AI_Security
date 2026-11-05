@@ -1,0 +1,28 @@
+{
+  "model": "GB",
+  "validation_macro_f1": 0.9620422277533356,
+  "validation_ap": 0.9856413208511232,
+  "validation": {
+    "DataSense": {
+      "macro_f1": 0.9410233783497355,
+      "average_precision": 0.9454469037371722
+    },
+    "Edge-IIoTset": {
+      "macro_f1": 0.9953994265903137,
+      "average_precision": 0.9976638384178481
+    },
+    "CICIoT2023": {
+      "macro_f1": 0.9216122628890939,
+      "average_precision": 0.9999556499121439
+    },
+    "X-IIoTID": {
+      "macro_f1": 0.9901338431841991,
+      "average_precision": 0.9994988913373286
+    }
+  },
+  "training_rows": 35030746,
+  "rounds": 300,
+  "artifact_bytes": 2168929,
+  "checkpoint": "artifacts\\expanded_classical\\GB\\model.ubj",
+  "actual_device": "cuda"
+}

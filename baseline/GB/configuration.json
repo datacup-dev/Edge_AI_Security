@@ -1,0 +1,25 @@
+{
+  "model": "GB",
+  "variant": "XGBoost histogram gradient-boosted trees",
+  "xgboost": "3.4.1",
+  "boosting_rounds": 300,
+  "parameters": {
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "device": "cuda",
+    "eta": 0.1,
+    "max_depth": 8,
+    "max_bin": 128,
+    "subsample": 1.0,
+    "colsample_bytree": 0.8,
+    "seed": 42,
+    "nthread": 4
+  },
+  "training_rows": 35030746,
+  "features": 157,
+  "input_adapter": "Full native namespace; observed active zeros are explicit CSR entries, unavailable domain blocks are missing",
+  "quantiles": "Built from training iterator only; no validation/test fitting",
+  "validation": "Four separate validation sets; mean macro-F1/AP; fixed 300 rounds, no test tuning",
+  "threshold": 0.5
+}

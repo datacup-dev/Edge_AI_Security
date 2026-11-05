@@ -1,37 +1,6 @@
 # Run status
 
-## Separate GB defense retraining
-
-Started a sequential run of 15 independent GB defenses using fixed augmented
-training snapshots. FGSM begins with 38,831,834 rows; generation-incomplete
-snapshots yield provisional defenses. No validation/test fitting or defense
-evaluation is performed in this step. This entry records launch, not completion.
-Live status: `artifacts/adversarial_defenses/status.json` and each attack's
-`progress.json` / log. [Method and settings](ADVERSARIAL_DEFENSE_TRAINING.md).
-
-<!-- validation-attacks-start -->
-## Separate adversarial validation generation
-
-Status: **running**; 78,836,717/112,598,835 candidates; 51/60 jobs complete.
-All four original validation sets, both classes. Frozen training-fitted attack components; no held-out fitting.
-[Live report](VALIDATION_ATTACK_REPORT.md). [Protocol](VALIDATION_ATTACKS.md).
-<!-- validation-attacks-end -->
-
-<!-- test-attacks-start -->
-## Separate adversarial test generation
-
-Status: **failed_worker**; 101,643,897/112,598,865 candidates; 55/60 jobs complete.
-All four original test sets, both classes. Frozen training-fitted attack components; no held-out fitting.
-[Live report](TEST_ATTACK_REPORT.md). [Protocol](TEST_ATTACKS.md).
-<!-- test-attacks-end -->
-
-<!-- both-class-attacks-start -->
-## Both-class mixed-training adversarial generation
-
-Status: **running**; saved 420,412,932/525,461,190 records; 10/15 methods complete.
-All original mixed-training records, both classes. Fifteen separate outputs. No held-out outputs.
-[Live report](MIXED_TRAINING_ATTACK_REPORT.md). [Process and parameters](MIXED_TRAINING_ATTACKS.md).
-<!-- both-class-attacks-end -->
+Adversarial-stage files and outputs were removed at the user's request. The clean classifier study and original GB baseline remain preserved. Local cleanup verifies hashes of protected classifier metadata/checkpoints. Run the repository cleanup helper on the lab server after updating its code to remove server-only artifacts.
 
 ## Expanded comparison
 
